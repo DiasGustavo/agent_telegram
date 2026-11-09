@@ -24,6 +24,15 @@ services:
       - DB_POSTGRESDB_USER=rag_user
       - DB_POSTGRESDB_PASSWORD=n8nProdIFSPB
       - DB_POSTGRESDB_DATABASE=conhecimento
+      
+      # Configurações de Envio de E-mail (Lendo do .env ou declaradas direto):
+      - N8N_EMAIL_MODE=smtp
+      - N8N_SMTP_HOST=smtp.gmail.com
+      - N8N_SMTP_PORT=465
+      - N8N_SMTP_SSL=true
+      - N8N_SMTP_USER=seuEmail@gmail.com
+      - N8N_SMTP_PASS=senha_para_app_google
+      - N8N_SMTP_SENDER="Minicurso IA IFSPB <seuEmail@gmail.com>"
 
     volumes:
       - n8n_data:/home/node/.n8n
