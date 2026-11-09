@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: postgres-rag
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: conhecimento
+      POSTGRES_USER: rag_user
+      POSTGRES_PASSWORD: n8nProdIFSPB
+
+    ports:
+      - "5432:5432"
+    
+    networks:
+      - rede_n8n
+
+    volumes:
+      - postgres_rag_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_rag_data:
+  
+networks:
+  rede_n8n:
+    external: true
+    name: rede_integracao

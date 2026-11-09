@@ -1,0 +1,40 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: n8n
+    restart: unless-stopped
+
+    ports:
+      - "5678:5678"
+    
+    environment:
+      - TZ=America/Fortaleza
+      - GENERIC_TIMEZONE=America/Fortaleza
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
+      
+      - N8N_WEBHOOK_URL=https://despite-fire-stickers-september.trycloudflare.com  
+      
+      # 👇 LINHA NOVA ADICIONADA ABAIXO (Libera o acesso à pasta):
+      - N8N_RESTRICT_FILE_ACCESS_TO=/data
+      
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres-rag  # <- O nome está correto!
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_USER=rag_user
+      - DB_POSTGRESDB_PASSWORD=n8nProdIFSPB
+      - DB_POSTGRESDB_DATABASE=conhecimento
+
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./meus_pdfs:/data/documentos:ro
+    networks:
+      - rede_integracao
+
+volumes:
+  n8n_data:
+  
+networks:
+  rede_integracao:
+    external: true
+    name: rede_integracao 
